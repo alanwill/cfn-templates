@@ -57,7 +57,7 @@
       "ConstraintDescription": "must be a valid IP CIDR range of the form x.x.x.x/x."
     },
 
-    "Presentation-ApplicationSubnetCidrAZ1" : {
+    "PresentationApplicationSubnetCidrAZ1" : {
       "Description" : "CIDR block for subnet containing the Web Servers (e.g. 10.1.2.3/25)",
       "Type": "String",
       "MinLength": "9",
@@ -67,7 +67,7 @@
       "ConstraintDescription": "must be a valid IP CIDR range of the form x.x.x.x/x."
     },
 
-    "Presentation-ApplicationSubnetCidrAZ2" : {
+    "PresentationApplicationSubnetCidrAZ2" : {
       "Description" : "CIDR block for subnet containing the Web Servers (e.g. 10.1.2.3/25)",
       "Type": "String",
       "MinLength": "9",
@@ -263,11 +263,11 @@
       }
     },
 
-    "Presentation-ApplicationSubnetAZ1" : {
+    "PresentationApplicationSubnetAZ1" : {
       "Type" : "AWS::EC2::Subnet",
       "Properties" : {
         "VpcId" : { "Ref" : "VPC" },
-        "CidrBlock" : { "Ref" : "Presentation-ApplicationSubnetCidrAZ1" },
+        "CidrBlock" : { "Ref" : "PresentationApplicationSubnetCidrAZ1" },
         "AvailabilityZone" : { "Fn::Select" : [ "0", { "Fn::GetAZs" : "" } ] },
         "Tags" : [
           { 
@@ -284,16 +284,16 @@
           },
           { 
             "Key" : "Name",
-            "Value" : "presentation-application"
+            "Value" : "PresentationApplication"
           }
         ]
       }
     },
-    "Presentation-ApplicationSubnetAZ2" : {
+    "PresentationApplicationSubnetAZ2" : {
       "Type" : "AWS::EC2::Subnet",
       "Properties" : {
         "VpcId" : { "Ref" : "VPC" },
-        "CidrBlock" : { "Ref" : "Presentation-ApplicationSubnetCidrAZ2" },
+        "CidrBlock" : { "Ref" : "PresentationApplicationSubnetCidrAZ2" },
         "AvailabilityZone" : { "Fn::Select" : [ "1", { "Fn::GetAZs" : "" } ] },
         "Tags" : [
           { 
@@ -310,7 +310,7 @@
           },
           { 
             "Key" : "Name",
-            "Value" : "presentation-application"
+            "Value" : "PresentationApplication"
           }
         ]
       }
@@ -514,17 +514,17 @@
       }
     },
 
-    "Presentation-AppplicationSubnetRouteTableAssociation1" : {
+    "PresentationApplicationSubnetRouteTableAssociation1" : {
       "Type" : "AWS::EC2::SubnetRouteTableAssociation",
       "Properties" : {
-        "SubnetId" : { "Ref" : "Presentation-ApplicationSubnetAZ1" },
+        "SubnetId" : { "Ref" : "PresentationApplicationSubnetAZ1" },
         "RouteTableId" : { "Ref" : "InternalRouteTable" }
       }
     },
-    "Presentation-AppplicationSubnetRouteTableAssociation2" : {
+    "PresentationApplicationSubnetRouteTableAssociation2" : {
       "Type" : "AWS::EC2::SubnetRouteTableAssociation",
       "Properties" : {
-        "SubnetId" : { "Ref" : "Presentation-ApplicationSubnetAZ2" },
+        "SubnetId" : { "Ref" : "PresentationApplicationSubnetAZ2" },
         "RouteTableId" : { "Ref" : "InternalRouteTable" }
       }
     },
@@ -676,7 +676,7 @@
     "InternalSubnetAclAssociation1" : {
       "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
       "Properties" : {
-        "SubnetId" : { "Ref" : "Presentation-ApplicationSubnetAZ1" },
+        "SubnetId" : { "Ref" : "PresentationApplicationSubnetAZ1" },
         "NetworkAclId" : {"Ref" : "InternalSubnetAcl"}
       }
     },
@@ -684,7 +684,7 @@
     "InternalSubnetAclAssociation2" : {
       "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
       "Properties" : {
-        "SubnetId" : { "Ref" : "Presentation-ApplicationSubnetAZ2" },
+        "SubnetId" : { "Ref" : "PresentationApplicationSubnetAZ2" },
         "NetworkAclId" : {"Ref" : "InternalSubnetAcl"}
       }
     },
@@ -859,8 +859,8 @@
     "InternalSubnets" : {
       "Description" : "Internal Subnets",
       "Value" : { "Fn::Join":["", [
-			{"Ref" : "Presentation-ApplicationSubnetAZ1" }, " (in ", {"Fn::GetAtt" : [ "Presentation-ApplicationSubnetAZ1", "AvailabilityZone" ] }, "), ",
-			{"Ref" : "Presentation-ApplicationSubnetAZ2" }, " (in ", {"Fn::GetAtt" : [ "Presentation-ApplicationSubnetAZ2", "AvailabilityZone" ] }, "), ",
+			{"Ref" : "PresentationApplicationSubnetAZ1" }, " (in ", {"Fn::GetAtt" : [ "PresentationApplicationSubnetAZ1", "AvailabilityZone" ] }, "), ",
+			{"Ref" : "PresentationApplicationSubnetAZ2" }, " (in ", {"Fn::GetAtt" : [ "PresentationApplicationSubnetAZ2", "AvailabilityZone" ] }, "), ",
       {"Ref" : "InternalLoadBalancerSubnetAZ1" }, " (in ", {"Fn::GetAtt" : [ "InternalLoadBalancerSubnetAZ1", "AvailabilityZone" ] }, "), ",
       {"Ref" : "InternalLoadBalancerSubnetAZ2" }, " (in ", {"Fn::GetAtt" : [ "InternalLoadBalancerSubnetAZ2", "AvailabilityZone" ] }, ")"
         ]]}
